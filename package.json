@@ -7,7 +7,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:video-web": "node dist/video-web/server/server.mjs"
+    "serve:ssr:video-web": "node dist/video-web/server/server.mjs",
+    "build:ssr": "ng build --prod && ng run your-app-name:server:production",
+    "serve:ssr": "node dist/server"
   },
   "private": true,
   "dependencies": {
