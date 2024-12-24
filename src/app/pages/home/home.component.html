@@ -21,7 +21,8 @@
         <div class="row gy-4 justify-content-center">
             <div class="col-xl-3 col-lg-4 col-md-6">
                 <div class="gallery-item h-100">
-                    <img src="https://motionbgs.com/i/c/364x205/media/3182/rainy-pine-forest.jpg.webp" class="img-fluid" alt="">
+                    <img src="https://motionbgs.com/i/c/364x205/media/3182/rainy-pine-forest.jpg.webp" class="img-fluid"
+                        alt="">
                     <div class="gallery-links d-flex align-items-center justify-content-center">
                         <a href="assets/img/gallery/gallery-1.jpg" title="Gallery 1" class="glightbox preview-link"><i
                                 class="bi bi-arrows-angle-expand"></i></a>
@@ -32,7 +33,8 @@
 
             <div class="col-xl-3 col-lg-4 col-md-6">
                 <div class="gallery-item h-100">
-                    <img src="https://motionbgs.com/i/c/364x205/media/3182/rainy-pine-forest.jpg.webp" class="img-fluid" alt="">
+                    <img src="https://motionbgs.com/i/c/364x205/media/3182/rainy-pine-forest.jpg.webp" class="img-fluid"
+                        alt="">
                     <div class="gallery-links d-flex align-items-center justify-content-center">
                         <a href="assets/img/gallery/gallery-2.jpg" title="Gallery 2" class="glightbox preview-link"><i
                                 class="bi bi-arrows-angle-expand"></i></a>
@@ -43,7 +45,8 @@
 
             <div class="col-xl-3 col-lg-4 col-md-6">
                 <div class="gallery-item h-100">
-                    <img src="https://motionbgs.com/i/c/364x205/media/3182/rainy-pine-forest.jpg.webp" class="img-fluid" alt="">
+                    <img src="https://motionbgs.com/i/c/364x205/media/3182/rainy-pine-forest.jpg.webp" class="img-fluid"
+                        alt="">
                     <div class="gallery-links d-flex align-items-center justify-content-center">
                         <a href="assets/img/gallery/gallery-3.jpg" title="Gallery 3" class="glightbox preview-link"><i
                                 class="bi bi-arrows-angle-expand"></i></a>
@@ -54,7 +57,8 @@
 
             <div class="col-xl-3 col-lg-4 col-md-6">
                 <div class="gallery-item h-100">
-                    <img src="https://motionbgs.com/i/c/364x205/media/3182/rainy-pine-forest.jpg.webp" class="img-fluid" alt="">
+                    <img src="https://motionbgs.com/i/c/364x205/media/3182/rainy-pine-forest.jpg.webp" class="img-fluid"
+                        alt="">
                     <div class="gallery-links d-flex align-items-center justify-content-center">
                         <a href="assets/img/gallery/gallery-4.jpg" title="Gallery 4" class="glightbox preview-link"><i
                                 class="bi bi-arrows-angle-expand"></i></a>
@@ -65,7 +69,8 @@
 
             <div class="col-xl-3 col-lg-4 col-md-6">
                 <div class="gallery-item h-100">
-                    <img src="https://motionbgs.com/i/c/364x205/media/3182/rainy-pine-forest.jpg.webp" class="img-fluid" alt="">
+                    <img src="https://motionbgs.com/i/c/364x205/media/3182/rainy-pine-forest.jpg.webp" class="img-fluid"
+                        alt="">
                     <div class="gallery-links d-flex align-items-center justify-content-center">
                         <a href="assets/img/gallery/gallery-5.jpg" title="Gallery 5" class="glightbox preview-link"><i
                                 class="bi bi-arrows-angle-expand"></i></a>
@@ -76,7 +81,8 @@
 
             <div class="col-xl-3 col-lg-4 col-md-6">
                 <div class="gallery-item h-100">
-                    <img src="https://motionbgs.com/i/c/364x205/media/3182/rainy-pine-forest.jpg.webp" class="img-fluid" alt="">
+                    <img src="https://motionbgs.com/i/c/364x205/media/3182/rainy-pine-forest.jpg.webp" class="img-fluid"
+                        alt="">
                     <div class="gallery-links d-flex align-items-center justify-content-center">
                         <a href="assets/img/gallery/gallery-6.jpg" title="Gallery 6" class="glightbox preview-link"><i
                                 class="bi bi-arrows-angle-expand"></i></a>
@@ -87,7 +93,8 @@
 
             <div class="col-xl-3 col-lg-4 col-md-6">
                 <div class="gallery-item h-100">
-                    <img src="https://motionbgs.com/i/c/364x205/media/3182/rainy-pine-forest.jpg.webp" class="img-fluid" alt="">
+                    <img src="https://motionbgs.com/i/c/364x205/media/3182/rainy-pine-forest.jpg.webp" class="img-fluid"
+                        alt="">
                     <div class="gallery-links d-flex align-items-center justify-content-center">
                         <a href="/src/assets/img/gallery/gallery-7.jpg" title="Gallery 7"
                             class="glightbox preview-link"><i class="bi bi-arrows-angle-expand"></i></a>
@@ -98,7 +105,8 @@
 
             <div class="col-xl-3 col-lg-4 col-md-6">
                 <div class="gallery-item h-100">
-                    <img src="https://motionbgs.com/i/c/364x205/media/3182/rainy-pine-forest.jpg.webp" class="img-fluid" alt="">
+                    <img src="https://motionbgs.com/i/c/364x205/media/3182/rainy-pine-forest.jpg.webp" class="img-fluid"
+                        alt="">
                     <div class="gallery-links d-flex align-items-center justify-content-center">
                         <a href="assets/img/gallery/gallery-8-2.jpg" title="Gallery 8" class="glightbox preview-link"><i
                                 class="bi bi-arrows-angle-expand"></i></a>
@@ -111,3 +119,29 @@
 
     </div>
 </section><!-- /Gallery Section -->
+
+<div class="container">
+    <div class="row">
+        <h2> Folders</h2>
+    </div>
+    <div class="row">
+
+        <ul>
+            <li *ngFor="let folder of folders">
+                {{ folder.name }} ({{ folder.id }})
+            </li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <h2>Videos in First Folder</h2>
+    </div>
+
+    <div class="row">
+        <ul>
+            <li *ngFor="let video of videos">
+                {{ video.name }} - <a [href]="video.webViewLink" target="_blank">View</a>
+            </li>
+        </ul>
+    </div>
+</div>

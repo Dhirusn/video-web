@@ -1,91 +1,104 @@
-import { Injectable } from '@angular/core';
-import { Observable, from } from 'rxjs';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Observable } from 'rxjs';
 
-declare var gapi: any; // Declaring gapi globally for Google API
+declare var gapi: any;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class GoogleDriveService {
-  private clientId = '75577213108-lmi32kcqgeh3a7ds2pode40v4ufk7alk.apps.googleusercontent.com';
-  private apiKey = 'YOUR_API_KEY'; // You may need to get an API Key from Google Console
-  private refreshToken = '1//04y1bcNQc2DwTCgYIARAAGAQSNwF-L9IrdLRJ6_foDbUyEsb9f0YDmw9AWytg8K7K7Dep5n5nU6Etd20fHK_3TZ95LMqnel9WVQc';
-  private folderId: string = 'YOUR_FOLDER_ID';
+export class GoogleDriveServiceService {
+  private gapiLoaded = false;
 
-  constructor() { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
 
-  // Initialize Google API client
-  private initializeClient(): Observable<any> {
-    return new Observable(observer => {
-      gapi.load('client:auth2', () => {
-        gapi.client.init({
-          apiKey: this.apiKey,
-          clientId: this.clientId,
-          discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
-          scope: 'https://www.googleapis.com/auth/drive.readonly'
-        }).then(() => {
-          observer.next('Google API initialized');
+  public loadGapi(): Observable<void> {
+    return new Observable((observer) => {
+      if (!isPlatformBrowser(this.platformId)) {
+        observer.error('Google API can only be initialized in a browser environment');
+        return;
+      }
+
+      if (this.gapiLoaded) {
+        observer.next();
+        observer.complete();
+      } else {
+        const script = document.createElement('script');
+        script.src = 'https://apis.google.com/js/api.js';
+        script.onload = () => {
+          this.gapiLoaded = true;
+          observer.next();
           observer.complete();
-        }, (error: any) => {
-          observer.error(error);
-        });
+        };
+        script.onerror = (error) => {
+          observer.error('Failed to load Google API script');
+        };
+        document.body.appendChild(script);
+      }
+    });
+  }
+
+  initializeClient(): Observable<any> {
+    return new Observable((observer) => {
+      this.loadGapi().subscribe({
+        next: () => {
+          gapi.load('client:auth2', () => {
+            gapi.client
+              .init({
+                apiKey: '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',
+                clientId: '75577213108-lmi32kcqgeh3a7ds2pode40v4ufk7alk.apps.googleusercontent.com',
+                clientSecret: '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',
+                discoveryDocs: [
+                  'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest',
+                ],
+                scope: 'https://www.googleapis.com/auth/drive.readonly',
+              })
+              .then(() => {
+                observer.next('Google API initialized');
+                observer.complete();
+              })
+              .catch((error: any) => {
+                observer.error(error);
+              });
+          });
+        },
+        error: (err) => observer.error(err),
       });
     });
   }
 
-  // Authenticate user using Google OAuth 2.0
-  authenticate(): Observable<any> {
-    return new Observable(observer => {
-      gapi.auth2.getAuthInstance().signIn().then(() => {
-        observer.next('User signed in');
-        observer.complete();
-      }, (error: any) => {
-        observer.error(error);
+  getAllFolders(): Observable<any[]> {
+    return new Observable((observer) => {
+      const request = gapi.client.drive.files.list({
+        q: "mimeType='application/vnd.google-apps.folder'",
+        fields: 'files(id, name)',
+      });
+
+      request.execute((response: any) => {
+        if (response.error) {
+          observer.error(response.error);
+        } else {
+          observer.next(response.files || []);
+          observer.complete();
+        }
       });
     });
   }
 
-  // Fetch files from the folder
-  getFolderFiles(): Observable<any> {
-    return new Observable(observer => {
-      gapi.client.drive.files.list({
-        q: `'${this.folderId}' in parents and mimeType contains 'video/'`,
-        fields: "files(id, name, mimeType, webViewLink, webContentLink)"
-      }).then((response: any) => {
-        observer.next(response.result.files);
-        observer.complete();
-      }, (error: any) => {
-        observer.error(error);
+  getFolderFiles(folderId: string): Observable<any[]> {
+    return new Observable((observer) => {
+      const request = gapi.client.drive.files.list({
+        q: `'${folderId}' in parents and mimeType contains 'video/'`,
+        fields: 'files(id, name, mimeType, webViewLink, webContentLink)',
       });
-    });
-  }
 
-  // Fetch all video files (e.g., mp4) from Google Drive
-  getAllVideoFiles(): Observable<any> {
-    return new Observable(observer => {
-      gapi.client.drive.files.list({
-        q: "mimeType='video/mp4'",  // Specify video format
-        fields: "files(id, name, webContentLink)"
-      }).then((response: any) => {
-        observer.next(response.result.files);
-        observer.complete();
-      }, (error: any) => {
-        observer.error(error);
-      });
-    });
-  }
-
-  // Fetch all folders in Google Drive
-  getAllFolders(): Observable<any> {
-    return new Observable(observer => {
-      gapi.client.drive.files.list({
-        q: "mimeType='application/vnd.google-apps.folder'",  // Filter only folders
-        fields: "files(id, name)"
-      }).then((response: any) => {
-        observer.next(response.result.files);
-        observer.complete();
-      }, (error: any) => {
-        observer.error(error);
+      request.execute((response: any) => {
+        if (response.error) {
+          observer.error(response.error);
+        } else {
+          observer.next(response.files || []);
+          observer.complete();
+        }
       });
     });
   }
