@@ -2,18 +2,18 @@
   "version": 2,
   "builds": [
     {
-      "src": "dist/server/main.js",
+      "src": "dist/video-web/server/main.js",
       "use": "@vercel/node"
     },
     {
-      "src": "dist/browser/**/*",
+      "src": "dist/video-web/browser/**/*",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "dist/server/main.js"
+      "dest": "dist/video-web/server/main.js"
     }
   ]
 }
